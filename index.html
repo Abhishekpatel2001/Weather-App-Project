@@ -35,7 +35,17 @@
         </aside>
 
         <!-- Main weather display and forecast section -->
-       
+        <section class="lg:col-span-3 grid gap-4">
+            <!-- Current weather card -->
+            <div class="current-weather bg-indigo-500 text-white rounded-lg shadow-lg p-6 flex flex-col items-center hover:bg-green-500 cursor-pointer">
+                <h2 class="text-3xl font-bold">  City Name </h2>
+                <img class="weather-icon mt-4 mb-2 w-32 h-32 " src="" alt="Weather Icon" />
+                <p class="text-xl font-semibold">Temperature: __°C</p>
+                <p class="mt-1">Wind Speed: __ M/S</p>
+                <p>Humidity: __%</p>
+                <p>Pressure: __ hPa</p>
+            </div>
+        </section>
         
     </main>
 
