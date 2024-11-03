@@ -24,7 +24,7 @@
 - HTML
 - Tailwind CSS
 - JavaScript
-- OpenWeatherMap
+- OpenWeatherMap API
 
 <p>Github Repo link---
     https://github.com/Abhishekpatel2001/Weather-App-Project.git
