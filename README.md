@@ -1,1 +1,2 @@
 <h1>Weather-App-Project</h1>
+<p> A Weather Forecast Application built using HTML, Tailwind CSS, and JavaScript. The app fetches weather data from an external API and displays it in a user-friendly interface.</p>
