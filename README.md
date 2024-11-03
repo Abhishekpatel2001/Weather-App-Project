@@ -18,3 +18,10 @@
         1. Click on the track location icon.
         2. Allow the geolocation permission.
         3. Weather forecast will be updated.
+
+## Built With
+
+- HTML
+- Tailwind CSS
+- JavaScript
+- OpenWeatherMap

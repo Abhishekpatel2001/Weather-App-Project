@@ -103,3 +103,57 @@ function updateForecastUI(data) {
         card.querySelector('.forecast-icon').src = `http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
     }
 }
+function updateHourlyUI(data) {
+    const hourlyCardsContainer = document.querySelector('.hourly-forecast ul');
+    hourlyCardsContainer.innerHTML = ''; 
+
+    for (let i = 0; i < 5; i++) { 
+        const hourlyData = data.list[i]; 
+        const hour = new Date(hourlyData.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const card = document.createElement('li');
+        card.className = 'hourly-card bg-gray-600 text-white rounded-lg shadow-lg p-4 text-center';
+        card.innerHTML = `
+            <h3 class="text-lg font-semibold">${hour}</h3>
+            <p>Temp: ${hourlyData.main.temp}°C</p>
+            <p>Wind: ${hourlyData.wind.speed} M/S</p>
+            <p>Humidity: ${hourlyData.main.humidity}%</p>
+        `;
+
+        hourlyCardsContainer.appendChild(card);
+    }
+}
+
+function updateRecentSearches(city) {
+    const recentCitiesSelect = document.querySelector('.recent-cities');
+    const currentOptions = Array.from(recentCitiesSelect.options).map(option => option.value);
+
+    if (!currentOptions.includes(city)) {
+        const newOption = document.createElement('option');
+        newOption.value = city;
+        newOption.textContent = city;
+        recentCitiesSelect.appendChild(newOption);
+        const recentCities = JSON.parse(localStorage.getItem('recentCities')) || [];
+        recentCities.push(city);
+        localStorage.setItem('recentCities', JSON.stringify([...new Set(recentCities)]));
+    }
+}
+
+window.addEventListener('load', () => {
+    const recentCities = JSON.parse(localStorage.getItem('recentCities')) || [];
+    const recentCitiesSelect = document.querySelector('.recent-cities');
+
+    recentCities.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        recentCitiesSelect.appendChild(option);
+    });
+
+    recentCitiesSelect.addEventListener('change', (event) => {
+        const selectedCity = event.target.value;
+        if (selectedCity) {
+            fetchWeatherData(selectedCity);  
+        }
+    });
+});
