@@ -66,3 +66,40 @@ function fetchForecastData(lat, lon) {
       console.error("Error fetching forecast data:", error);
     });
 }
+
+function updateCurrentWeatherUI(data) {
+    const weatherElement = document.querySelector('.current-weather h2');
+    const tempElement = document.querySelector('.current-weather p:nth-of-type(1)');
+    const windElement = document.querySelector('.current-weather p:nth-of-type(2)');
+    const humidityElement = document.querySelector('.current-weather p:nth-of-type(3)');
+    const pressureElement = document.querySelector('.current-weather p:nth-of-type(4)');
+    const iconElement = document.querySelector('.weather-icon');
+
+    weatherElement.textContent = `${data.name} (${data.weather[0].description})`;
+    tempElement.textContent = `Temperature: ${data.main.temp}°C`;
+    windElement.textContent = `Wind Speed: ${data.wind.speed} M/S`;
+    humidityElement.textContent = `Humidity: ${data.main.humidity}%`;
+    pressureElement.textContent = `Pressure: ${data.main.pressure} hPa`;
+    iconElement.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+}
+
+function updateForecastUI(data) {
+    const forecastCards = document.querySelectorAll('.days-forecast .card');
+
+    forecastCards.forEach(card => {
+        card.querySelector('h3').textContent = '( ______ )';
+        card.querySelectorAll('p').forEach(p => p.textContent = '______');
+        card.querySelector('.forecast-icon').src = ''; 
+    });
+
+    for (let i = 0; i < forecastCards.length; i++) {
+        const forecast = data.list[i * 8]; 
+        const card = forecastCards[i];
+
+        card.querySelector('h3').textContent = new Date(forecast.dt * 1000).toLocaleDateString();
+        card.querySelector('p:nth-of-type(1)').textContent = `Temp: ${forecast.main.temp}°C`;
+        card.querySelector('p:nth-of-type(2)').textContent = `Wind: ${forecast.wind.speed} M/S`;
+        card.querySelector('p:nth-of-type(3)').textContent = `Humidity: ${forecast.main.humidity}%`;
+        card.querySelector('.forecast-icon').src = `http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`;
+    }
+}
